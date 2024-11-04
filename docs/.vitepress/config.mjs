@@ -4,7 +4,7 @@ import { sidebar } from "./sidebar.mjs";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "C++文档",
+  title: "无底洞",
   description: "专注于C++",
   lastUpdated: true,
   lang: "zh_Hans",
@@ -15,17 +15,37 @@ export default defineConfig({
       {
         rel: "icon",
         type: "image/svg+xml",
-        href: "/favicon-vitepress-noeffect-3.svg",
+        href: "https://cdn.jsdelivr.net/gh/sigmax0124/logo@master/favicon-mc-1.svg",
       },
     ],
     [
       "link",
       {
-        rel: "icon",
-        type: "image/png",
-        href: "/favicon-vitepress-noeffect-3.png",
-      },
+        rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/npm/@fontsource/mononoki@5.1.0/index.min.css"
+      }
     ],
+    [
+      "link",
+      {
+        rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/npm/@ayahub/webfont-harmony-sans-sc@1.0.0/css/index.min.css"
+      }
+    ],
+    // [
+    //   "link",
+    //   {
+    //     rel: "stylesheet",
+    //     href: "https://cdn.jsdelivr.net/gh/satouriko/LxgwWenKai_Webfonts@v1.101/dist/LXGWWenKaiMono-Regular.css"
+    //   }
+    // ],
+    // [
+    //   "link",
+    //   {
+    //     rel: "stylesheet",
+    //     href: "https://cdn.jsdelivr.net/gh/satouriko/LxgwWenKai_Webfonts@v1.101/dist/LXGWWenKaiMono-Bold.css"
+    //   }
+    // ]
   ],
   markdown: {
     image: {
@@ -41,7 +61,7 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: "/favicon-vitepress-noeffect-3.png",
+    logo: "https://cdn.jsdelivr.net/gh/sigmax0124/logo@master/favicon-mc-1.svg",
     search: {
       provider: "local",
       options: {
@@ -83,7 +103,7 @@ export default defineConfig({
     sidebar,
     socialLinks: [{ icon: "github", link: "https://github.com/ricolxwz" }],
     footer: {
-      message: "基于 MIT 许可发布",
+      message: "采用 CC BY-NC 4.0 许可证发布",
       copyright: "版权所有 © 2024-至今 许文泽 ️🌴",
     },
   },
