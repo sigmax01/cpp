@@ -14,6 +14,7 @@
     --vp-font-family-mono: "mononoki", "HarmonyOS Sans SC";/* code font */
 }
 
-.vp-doc * {
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6  {
     border-top: unset !important;
+    margin: 16px 0 16px !important;
 }
