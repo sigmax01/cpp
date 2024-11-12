@@ -7,6 +7,10 @@ export const sidebar = {
         {
             text: "构建",
             link: "/basic/build"
+        },
+        {
+            text: "类型",
+            link: "/basic/type"
         }
     ]
 };

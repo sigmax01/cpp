@@ -20,5 +20,6 @@ prev: false
 
 ## 进度
 
-- [基础](/basic/)
-    - [构建](/basic/build)
+- 🎃 [基础](/basic/)
+    - 👾 [构建](/basic/build)
+    - 👽 [类型](/basic/type)
