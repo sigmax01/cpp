@@ -25,6 +25,9 @@ footer: true
 
    链接方式分为动态链接和静态链接, 静态链接是在链接阶段将库文件中的代码复制到可执行文件中, 静态库通常以`.a`(Linux)或`.lib`(Windows)为后缀. 它的有点是可执行文件不依赖外部库, 运行的时候无需加载其他文件, 每个程序包含所需的所有代码, 移植性强. 缺点是静态链接后产生的可执行文件的体积较大. 因为每个程序都包含库代码的副本. 更新库的时候, 需要重新链接. 动态链接不将库代码复制到可执行文件中. 动态库文件通常以`.so`或`.dll`(Windows)为后缀. 优点是可执行文件体积小, 不包含库代码的副本. 多个程序可以共享同一个动态库节省内存. 更新库的时候无需重新链接, 只需要替换库文件. 缺点是运行的时候需要加载动态库, 如果库版本不兼容(例如换了一台电脑, 操作系统)可能导致程序奔溃或者功能错误.
 
+![](https://img.ricolxwz.io/5b0f8fb7c7384ba297ab23fd0cb1222e.png){style="display: block; margin: 0 auto; width: 80%;"}
+
+
 ## 工具链
 
 ### MSVC和Windows SDK
@@ -127,6 +130,52 @@ Clang的主要功能有:
 - 词法分析和语法分析: Clang将源代码解析生抽象语法树, AST. 检查语法和语义错误
 - 生成中间代码: Clang将AST转换为中间代码, 作为LLVM的输入
 - 编译命令和选项: Clang提供了许多命令行选项, 兼容GCC的大部分参数
+
+## 构建系统
+
+构建系统是为了简化和自动化编译过程而诞生的, 特别是当项目逐渐复杂化的时候, 它提供了一种更高效的编译方式, 通过构建系统, 我们不再需要手动编写繁琐的编译指令, 而是将编译过程集中到一份构建配置文件中, 由构建系统根据文件自动生成所需要的指令, 并完整编译.
+
+如果使用"炒菜"来比喻, 编译工具就是炒菜的工具, 而源代码, 库文件就是食材. 手动编写编译命令相当于自己按照步骤炒菜, 每一个步骤都要自己动手. 而构建系统就是自动化"炒菜机器人", 通过配置文件来指示每一步的操作, 使整个编译过程从繁琐的手动操作, 编程一键执行的自动化过程.
+
+构建系统在底层依赖于编译工具链, 但是它抽象了项目的编译流程, 适应了不同的开发环境和需求, 支持复杂的编译配置(如debug模式和release模式). 常见的构建系统包括Makefile(主要在Linux中使用), CMake(跨平台构建工具), MSBuild(微软的构建工具等)
+
+### MSBuild
+
+在Windows开发环境中, MSBuild是主要的构建系统. MSBuild就好比是一位自动炒菜的机器人, 它可以根据图纸(配置文件)来自动操作. sln和vcxpro文件就是MSBuild的图纸. 这些文件记录了项目中需要的源代码文件, 依赖库的路径, 编译选项(如Debug或Release模式)等信息. MSVC就是这个过程中的"炒菜铲子", MSBuild不直接进行编译工作, 而是交给MSVC完成具体的编译和链接任务. 当你点击Visual Studio的运行或者构建按钮的时候, VS实际上调用的是msbuild.exe, 并按照sln和vcxproj文件中的配置来完成构建流程.
+
+![](https://img.ricolxwz.io/22c4d93e619bd4000448d23a777693e5.png){style="display: block; margin: 0 auto; width: 80%;"}
+
+### Make
+
+在Linux/Unix上, Make是最主要的构建系统. 它的配置文件是Makefile, 相当于之前的sln和vcxproj文件. Makefile文件中包含了项目中的源代码文件, 编译选项, 依赖关系等信息, 并定义了每一步构建构成的详细规则, 当你输入命令`make`的时候, 系统会自动读取当前目录下的Makefile文件, 根据其中的配置生成GCC等编辑器的调用命令, 通过这些命令执行实际的编译.
+
+![](https://img.ricolxwz.io/519c2d80d70ba577226c0eb1c20258ba.png){style="display: block; margin: 0 auto; width: 80%;"}
+
+### xcodebuild
+
+在macos上, xcodebuild是一个主要的构建系统, 它和msbuild的作用类似, 读取项目的配置文件.xcodeproj或者.xcworkspace, 然后根据配置来执行编译, 链接等操作.
+
+![](https://img.ricolxwz.io/0e503c1c407270e7475145555df646d6.png){style="display: block; margin: 0 auto; width: 80%;"}
+
+### Ninja
+
+Ningja是一个跨平台的构建系统. 使用.ninja文件作为配置. 它在Windows, Linux, macOS上都可以使用. 它设计简单且优化了增量构建的流程, 使得重新编译修改过的文件非常高效, 特别适合大型项目的频繁构建需求.
+
+![](https://img.ricolxwz.io/f465064438df50b5577eb591f5b2fa03.png){style="display: block; margin: 0 auto; width: 80%;"}
+
+## 生成构建系统工具
+
+### CMake
+
+CMake是一种用于解决跨平台构建系统问题的工具. 在上节, 我们看到, 不同的操作系统都有各自的构建系统和配置格式, 例如Windows上使用MSBuild, 需要`.sln`和`.vcxproj`文件; Linux上使用Make, 需要`Makefile`文件, macOS上使用xcodebuild, 需要`.xcodeproj`文件. 每个系统构建系统的配置格式, 编译规则都不一样, 对于跨平台项目, 开发者需要在每个平台上编写并维护一套独立的构建配置文件, 这不仅增加了工作量, 也容易导致平台之间的构建配置不一致, 从而引发兼容问题.
+
+为了简化跨平台构建, CMake提出了一种新的方法: 它本身不是一个直接用于构建的工具, 而是一个生成构建配置的工具, CMake使用通用的配置文件`CMakeLists.txt`, 这份文件是用一种特定的语言(DSL)编写的, 用于描述项目的结构, 依赖关系, 编译选项等.
+
+![](https://img.ricolxwz.io/517aba3e21d1c4c8cd3fa4697be297db.png){style="display: block; margin: 0 auto; width: 80%;"}
+
+### Xmake
+
+Xmake是一个基于Lua语言的轻量级跨平台构建工具&生成构建工具, 它的独特之处在于可以扮演双重角色, 既可以作为构建系统直接执行编译, 又可以充当生成其他构建系统配置文件的工具. 
 
 <br>
 
