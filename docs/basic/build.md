@@ -41,7 +41,7 @@ MSVC是Microsoft提供的一套C/C++开发工具链, 包含了一系列支持编
 - 仅编译: `cl.exe /c filename.c`, 生成`.obj`文件而不链接
 - 编译并链接: `cl.exe filename.c`, 自动帮你调用`link.exe`完成编译和链接, 生成可执行文件
 
-除了编译器和链接器, 还提供了C/C++运行时库, 调试器(如`cdb.exe`), 代码分析工具等, 这些工具为开发过程中的调试, 性能分析提供了支持.
+除了编译器和链接器, 还提供了C/C++运行时库MSVCRT, 调试器(如`cdb.exe`), 代码分析工具等, 这些工具为开发过程中的调试, 性能分析提供了支持.
 
 Windows SDK提供了Windows平台特有的库文件, 头文件和元数据, 是Windows应用开发的重要组成部分, 主要内容有:
 
@@ -49,7 +49,7 @@ Windows SDK提供了Windows平台特有的库文件, 头文件和元数据, 是W
 - 元数据和工具: Windows SDK包含UWP(通用Windows平台)和Win32应用程序的工具集. 适用于不同Windows版本的SDK会包含特定的API版本和平台支持, 例如最新的Windows11 SDK会提供一下Windows10没有的API.
 
 ::: tip
-MSVC中包含的运行时库和Windows SDK库有显著区别:
+MSVC中包含的运行时库(MSVCRT)和Windows SDK库有显著区别:
 
 - MSVC运行时库: 主要为C/C++应用程序提供标准库的功能, 如基本的输入输出, 内存管理, 数学运算, 错误处理等. 如`prinf`, `malloc`, `free`等函数的实现
 - Windows SDK: 提供与Windows操作系统直接交互的API, 支持Windows特定的功能, 例如, Windows SDK包含文件操作, GUI, 设备管理, 网络通信, 线程控制等操作系统级别的API
@@ -69,6 +69,42 @@ GCC包含多个子工具和库, 以支持从源代码到可执行文件的整个
 - glibc: GNU C库, 包含了C标准库的基本函数实现, 如`printf`, `malloc`等, 这些函数为C/C++程序提供了标准的输入输出, 内存管理等功能.
 
 使用GCC编译的流程: `gcc hello.c -o hello`. 这段代码其实执行了两个步骤, 编译, 调用内部的`cc`编译器, 生成目标文件; 链接, 调用`ld`链接器, 将目标文件和标准库链接, 生成可执行文件. 可以使用`-c`参数让`gcc`只编译不链接, 也可以直接调用`cc`和`ld`来分别完成编译和链接操作.
+
+#### Cygwin
+
+Cygwin是一个在Windows上运行的POSIX兼容层, 为Windows系统提供类似于Linux环境的功能, 使开发者能够在Windows上运行和编写类Unix的程序. Cygwin默认内置GCC作为其主要编译器. 
+
+它的特点有:
+
+- POSIX兼容层: Cygwin的GCC编译器生成的程序会依赖Cygwin提供的POSIX兼容层, 即`cygwin1.dll`. 这使得程序可以在Windows上调用POSIX API, 从而使得很多Linux程序可以直接移植和运行在Windows上
+- 生成非原生的Windows程序: 由于编译的程序依赖于`cygwin1.dll`, 所以他们不是原生的windows程序, 无法在没有Cygwin的windows环境中运行
+- 工具链: Cygwin提供了`gcc`, `g++`等多种GCC编译器和工具链以及构建工具, 几乎和Linux上的GCC环境相同
+
+#### MinGW
+
+MinGW, Minimalist GNU for Windows, 是一个用于在Windows上构建Windows应用程序的编译工具集. 它基于GCC, 让开发者能够在Windows上使用GCC编译器来编译C, C++代码. MinGW提供了Windows版本的GNU开发工具, 支持生成原生Windows程序而无需依赖Cygwin这样的POSIX兼容层.
+
+MinGW主要包含:
+
+- GCC编译器: MinGW包含了适用于Windows的GCC编译器, 包括`gcc`, `g++`等命令
+- Binutils工具集: 包含了链接器`ld`, 汇编器`as`, 目标文件分析工具`objdump`等
+- MSVCRT(Microsoft Visual C++ Runtime Library): MinGW默认连接到Windows自带的MSVCRT库, 使得生成的程序能够运行在Windows平台上
+- Windows API头文件和库文件: 与Windows SDK类似, 能够让开发者直接调用Windows系统提供的API
+- MinGW Runtime: 一个简单的运行时库, 包含标准C库的实现. 注意, MinGW默认链接到MSVCRT, MinGW Runtime并不是一个完整的C运行时库, 而是一个针对MSVCRT的一个补充
+
+优点:
+
+- 轻量化: 和Cygwin相比, 不需要额外的POSIX兼容层, 生成的程序是纯Windows原生程序, 可以直接在Windows上运行
+- 跨平台编译支持: 借助MinGW, 开发者可以在Linux上通过交叉编译生成Windows程序
+
+#### MSYS2
+
+MSYS2, Minimal SYStem 2, 是一个在Windows上运行的轻量级POSIX兼容环境, 基于Cygwin项目开发, 并集成了MinGW-w64和Archlinux的包管理工具pacman, 它提供了一个类似于Linux的命令行环境和工具链, 帮助开发者在Windows上更方便地进行跨平台开发, 编译和构建.
+
+它的特点有:
+
+- POSIX兼容层: MSYS2基于Cygwin的POSIX兼容层, 实现了基本的POSIX API, 使得许多Linux工具和程序可以直接在Windows上运行
+- MinGW-w64: MSYS2集成了MinGW-w64工具链, 支持32位和64位Windows原生开发, 而不依赖POSIX兼容层
 
 ### Clang/LLVM
 
