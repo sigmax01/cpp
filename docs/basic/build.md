@@ -25,7 +25,7 @@ footer: true
 
    链接方式分为动态链接和静态链接, 静态链接是在链接阶段将库文件中的代码复制到可执行文件中, 静态库通常以`.a`(Linux)或`.lib`(Windows)为后缀. 它的有点是可执行文件不依赖外部库, 运行的时候无需加载其他文件, 每个程序包含所需的所有代码, 移植性强. 缺点是静态链接后产生的可执行文件的体积较大. 因为每个程序都包含库代码的副本. 更新库的时候, 需要重新链接. 动态链接不将库代码复制到可执行文件中. 动态库文件通常以`.so`或`.dll`(Windows)为后缀. 优点是可执行文件体积小, 不包含库代码的副本. 多个程序可以共享同一个动态库节省内存. 更新库的时候无需重新链接, 只需要替换库文件. 缺点是运行的时候需要加载动态库, 如果库版本不兼容(例如换了一台电脑, 操作系统)可能导致程序奔溃或者功能错误.
 
-![](https://img.ricolxwz.io/5b0f8fb7c7384ba297ab23fd0cb1222e.png){style="display: block; margin: 0 auto; width: 80%;"}
+![](https://img.ricolxwz.io/5b0f8fb7c7384ba297ab23fd0cb1222e.png){style="display: block; margin: 0 auto; width: 90%;"}
 
 
 ## 工具链
@@ -143,25 +143,25 @@ Clang的主要功能有:
 
 在Windows开发环境中, MSBuild是主要的构建系统. MSBuild就好比是一位自动炒菜的机器人, 它可以根据图纸(配置文件)来自动操作. sln和vcxpro文件就是MSBuild的图纸. 这些文件记录了项目中需要的源代码文件, 依赖库的路径, 编译选项(如Debug或Release模式)等信息. MSVC就是这个过程中的"炒菜铲子", MSBuild不直接进行编译工作, 而是交给MSVC完成具体的编译和链接任务. 当你点击Visual Studio的运行或者构建按钮的时候, VS实际上调用的是msbuild.exe, 并按照sln和vcxproj文件中的配置来完成构建流程.
 
-![](https://img.ricolxwz.io/22c4d93e619bd4000448d23a777693e5.png){style="display: block; margin: 0 auto; width: 80%;"}
+![](https://img.ricolxwz.io/22c4d93e619bd4000448d23a777693e5.png){style="display: block; margin: 0 auto; width: 90%;"}
 
 ### Make
 
 在Linux/Unix上, Make是最主要的构建系统. 它的配置文件是Makefile, 相当于之前的sln和vcxproj文件. Makefile文件中包含了项目中的源代码文件, 编译选项, 依赖关系等信息, 并定义了每一步构建构成的详细规则, 当你输入命令`make`的时候, 系统会自动读取当前目录下的Makefile文件, 根据其中的配置生成GCC等编辑器的调用命令, 通过这些命令执行实际的编译.
 
-![](https://img.ricolxwz.io/519c2d80d70ba577226c0eb1c20258ba.png){style="display: block; margin: 0 auto; width: 80%;"}
+![](https://img.ricolxwz.io/519c2d80d70ba577226c0eb1c20258ba.png){style="display: block; margin: 0 auto; width: 90%;"}
 
 ### xcodebuild
 
 在macos上, xcodebuild是一个主要的构建系统, 它和msbuild的作用类似, 读取项目的配置文件.xcodeproj或者.xcworkspace, 然后根据配置来执行编译, 链接等操作.
 
-![](https://img.ricolxwz.io/0e503c1c407270e7475145555df646d6.png){style="display: block; margin: 0 auto; width: 80%;"}
+![](https://img.ricolxwz.io/0e503c1c407270e7475145555df646d6.png){style="display: block; margin: 0 auto; width: 90%;"}
 
 ### Ninja
 
 Ningja是一个跨平台的构建系统. 使用.ninja文件作为配置. 它在Windows, Linux, macOS上都可以使用. 它设计简单且优化了增量构建的流程, 使得重新编译修改过的文件非常高效, 特别适合大型项目的频繁构建需求.
 
-![](https://img.ricolxwz.io/f465064438df50b5577eb591f5b2fa03.png){style="display: block; margin: 0 auto; width: 80%;"}
+![](https://img.ricolxwz.io/f465064438df50b5577eb591f5b2fa03.png){style="display: block; margin: 0 auto; width: 90%;"}
 
 ## 生成构建系统工具
 
@@ -171,7 +171,7 @@ CMake是一种用于解决跨平台构建系统问题的工具. 在上节, 我�
 
 为了简化跨平台构建, CMake提出了一种新的方法: 它本身不是一个直接用于构建的工具, 而是一个生成构建配置的工具, CMake使用通用的配置文件`CMakeLists.txt`, 这份文件是用一种特定的语言(DSL)编写的, 用于描述项目的结构, 依赖关系, 编译选项等.
 
-![](https://img.ricolxwz.io/517aba3e21d1c4c8cd3fa4697be297db.png){style="display: block; margin: 0 auto; width: 80%;"}
+![](https://img.ricolxwz.io/517aba3e21d1c4c8cd3fa4697be297db.png){style="display: block; margin: 0 auto; width: 90%;"}
 
 ### Xmake
 
