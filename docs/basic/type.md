@@ -200,7 +200,11 @@ std::cout << "a really, really long string literal "
 
 ##### 浮点型字面量
 
-| 后缀      | 类型                      |
-|-----------|---------------------------|
-| f or F    | float                     |
-| l or L    | long double               |
+| 后缀      | 类型                       |
+|-----------|--------------------------|
+| f or F    | float                    |
+| l or L    | long double              |
+
+#### 布尔字面量和指针字面量
+
+`true`和`false`是布尔类型的字面量. `nullptr`是指针字面量. 后面会有更多的详细介绍.
