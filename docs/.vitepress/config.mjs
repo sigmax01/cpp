@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
 import { nav } from "./nav.mjs";
 import { sidebar } from "./sidebar.mjs";
-import { analysis } from "./analysis";
+import { analysis } from "./analysis.js";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
