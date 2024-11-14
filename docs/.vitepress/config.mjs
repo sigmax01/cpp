@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
 import { nav } from "./nav.mjs";
 import { sidebar } from "./sidebar.mjs";
+import { analysis } from "./analysis";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -32,6 +33,7 @@ export default defineConfig({
         href: "https://cdn.jsdelivr.net/npm/@ayahub/webfont-harmony-sans-sc@1.0.0/css/index.min.css"
       }
     ],
+    analysis()
     // [
     //   "link",
     //   {
