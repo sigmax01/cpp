@@ -10,6 +10,7 @@ editLink: false
 footer: true
 next: false
 prev: false
+comments: false
 ---
 
 # 无底洞
