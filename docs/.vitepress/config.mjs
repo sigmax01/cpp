@@ -32,7 +32,15 @@ export default defineConfig({
         rel: "stylesheet",
         href: "https://cdn.jsdelivr.net/npm/@ayahub/webfont-harmony-sans-sc@1.0.0/css/index.min.css"
       }
-    ]
+    ],
+    [
+      'script',
+      {
+        src: "https://umami.ricolxwz.io/script.js",
+        defer: true,
+        "data-website-id": "428fe69a-245a-4a8c-937b-97369fc9a31b"
+      }
+    ],
     // [
     //   "link",
     //   {
@@ -108,7 +116,4 @@ export default defineConfig({
       copyright: "版权所有 © 2024-至今 许文泽 ️🌴",
     },
   },
-  vite: {
-    plugins: [analysis()]
-  }
 });
