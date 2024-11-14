@@ -32,8 +32,7 @@ export default defineConfig({
         rel: "stylesheet",
         href: "https://cdn.jsdelivr.net/npm/@ayahub/webfont-harmony-sans-sc@1.0.0/css/index.min.css"
       }
-    ],
-    analysis()
+    ]
     // [
     //   "link",
     //   {
@@ -109,4 +108,7 @@ export default defineConfig({
       copyright: "版权所有 © 2024-至今 许文泽 ️🌴",
     },
   },
+  vite: {
+    plugins: [analysis]
+  }
 });
