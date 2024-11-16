@@ -767,26 +767,35 @@ int &r2 = ci; // 错误: 试图让一个非常量引用指向一个常量对象
 
 前面说过, 引用的类型必须和其所引用的对象一致. 但是有两个例外. 第一种例外的情况就是在初始化常量引用的时候允许任意表达式作为初始值, 只要该表达式的结果能够转换为引用的类型即可. 尤其, 允许为一个常量引用绑定非常量的对象, 字面量甚至是个一般表达式.
 
-::: details
+::: details {open}
 ```cpp
 int i = 42;
-const int &r1 = i;
-const int &r2 = 42;
-const int &r3 = r1 * 2;
-int &r4 = r1 * 2;
+const int &r1 = i; // 允许将const int&绑定到一个普通的int对象上
+const int &r2 = 42; // 正确: r1是一个常量引用
+const int &r3 = r1 * 2; // 正确: r3是一个常量引用
+int &r4 = r1 * 2; // 错误: r4是一个普通的非常量引用
 ```
 :::
 
 当一个常量引用被绑定到另一种类型上的时候到底发生了什么呢.
 
-::: details
+::: details {open}
 ```cpp
 double dval = 3.14;
 const int &ri = dval;
 ```
 此处`ri`引用了一个`int`型的数. 对`ri`的操作应该是整数运算, 但是`dval`确实一个双精度浮点数而非整数. 因此为了确保让`ri`绑定一个整数, 编译器把上述代码变成了如下形式:
 ```cpp
-const int temp = dval;
-const int &ri = temp;
+const int temp = dval; // 由双精度浮点数生成一个临时的整型变量
+const int &ri = temp; // 让ri绑定这个临时量
+```
+在这种情况下, `ri`绑定了一个临时量对象. 所谓临时量对象就是当编译器需要一个空间来暂存表达式的求值结果的时候临时创建的一个未命名对象, 简称为临时量.
+
+```cpp
+double dval = 3.14;
+const int &ri = dval;
+cout << ri << endl; // 输出3
+dval = 4.24;
+cout << ri << endl; // 输出还是3, 说明它绑定的是那个临时量而不是dval
 ```
 :::
